@@ -14,7 +14,6 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-//        [self initialization];
     }
     return self;
 }
@@ -22,7 +21,6 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-//        [self initialization];
     }
     return self;
 }
@@ -43,7 +41,9 @@
 }
 
 - (void)layoutSubviews {
-
+    if (_symbolViews.count < _lenght) {
+        [self initialization];
+    }
     CGFloat contentWidth = self.lenght * self.symbolSize.width + (self.lenght - 1) * self.spaceBetweenSymbols;
     CGFloat centerY = self.frame.size.height / 2;
     CGFloat deltaX = self.symbolSize.width + self.spaceBetweenSymbols;
@@ -51,7 +51,6 @@
     for (UIImageView *iv in _symbolViews) {
         iv.center = CGPointMake(centerX, centerY);
         centerX += deltaX;
-//        NSLog(@"%@", iv);
     }
     for (int i = 0; i < self.lenght; i++) {
         if (i >= _pinCode.length)
@@ -66,15 +65,19 @@
     [self setNeedsLayout];
 }
 
-- (void)beginWithCompletionBlock:(CompletionBlock)completionBlock {
-    [self initialization];
-    _completionBlock = [completionBlock copy];
+- (void)beginWithCompletionBlock:(ARPinCodeCompletionBlock)completionBlock {
+    [self clean];
     [self becomeFirstResponder];
+    _completionBlock = [completionBlock copy];
+}
+
+- (void)clean {
+    [_pinCode deleteCharactersInRange:NSMakeRange(0, _pinCode.length)];
+    [self setNeedsLayout];
 }
 
 - (void)end {
     _completionBlock(_pinCode);
-//    [self resignFirstResponder];
 }
 
 
