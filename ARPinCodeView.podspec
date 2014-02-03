@@ -20,12 +20,11 @@ Pod::Spec.new do |s|
   s.author       = { "Andrey Ryabov" => "ghfghfg23@gmail.com" }
   s.source       = { :git => "https://github.com/ghfghfg23/ARPinCodeView.git", :tag => s.version.to_s }
 
-  # s.platform     = :ios, '5.0'
-  # s.ios.deployment_target = '5.0'
-  # s.osx.deployment_target = '10.7'
+  s.platform     = :ios, '7.0'
+  s.ios.deployment_target = '7.0'
   s.requires_arc = true
 
-  s.source_files = 'Classes'
+  s.source_files = 'Classes/ios/*'
   s.resources = 'Assets'
 
   s.ios.exclude_files = 'Classes/osx'
